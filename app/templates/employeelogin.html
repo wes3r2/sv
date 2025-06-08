@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Login</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/form-styles.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        .terms-checkbox {
+            display: flex;
+            align-items: flex-start;
+            padding-left: -20px;
+            gap: 0.5em;
+            margin-top: 1.2em;
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        .terms-checkbox input[type="checkbox"] {
+            margin-top: 0.3em;
+        }
+
+        .terms{
+            padding-right: 0px;
+        }
+
+        .terms-checkbox a {
+            color: #007bff;
+            text-decoration: underline;
+            cursor: pointer;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 20px;
+            border-radius: 8px;
+            width: 90%;
+            border-top: #000 solid 4px;
+            max-width: 500px;
+            font-family: 'Poppins', sans-serif;
+            position: relative;
+        }
+
+        .modal-content ul {
+            padding-left: 1.5em;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 24px;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .close-btn:hover {
+            color: #000;
+        }
+    </style>
+</head>
+<body>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="flash-messages">
+                {% for category, message in messages %}
+                    <div class="alert alert-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+    
+    <div class="container">
+        <div class="form-card">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path d="M9 21H5C4.5 21 4 20.5 3.6 20.1C3.2 19.7 3 19.2 3 18.7V5.3C3 4.8 3.2 4.3 3.6 3.9C4 3.5 4.5 3.3 5 3.3H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M16 17L21 12L16 7" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M21 12H9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+            </div>
+            <h1>Employee Login</h1>
+            <p class="subheading">Sign in using your employee ID & work e-mail assigned by the company.</p>
+            
+            <form method="POST" class="login-form">
+                <div class="input-group">
+                    <input type="text" name="emp_id" id="emp_id" placeholder=" " required>
+                    <label for="emp_id">Employee ID</label>
+                </div>
+                <div class="input-group">
+                    <input type="email" name="email" id="email" placeholder=" " required>
+                    <label for="email">Email</label>
+                </div>
+
+                <div class="subheading terms-checkbox">
+                    <input type="checkbox" id="terms" name="terms" required>
+                    <label for="terms">I agree to the <a id="show-terms">Terms and Conditions</a>.</label>
+                </div>
+
+
+                <button type="submit" class="submit-btn">Verify OTP</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; Having trouble logging in? Click here</p>
+    </footer>
+
+    <!-- Modal -->
+    <div id="terms-modal" class="modal">
+        <div class="subheading modal-content">
+            <span class="close-btn" id="close-modal">&times;</span>
+            <h2>Terms and Conditions</h2><br>
+            <p>
+                By using this platform, you agree to:
+                <ul>
+                    <li>Use only your real and assigned employee credentials.</li>
+                    <li>Not disclose, share, or misuse any confidential company information.</li>
+                    <li>Refrain from any activities that could harm the integrity or security of this platform.</li>
+                    <li>Report any suspicious activity or security breach to the IT department.</li>
+                </ul>
+                Any violation may lead to disciplinary actions as per company policies.
+            </p>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+    <script>
+        const modal = document.getElementById('terms-modal');
+        const showBtn = document.getElementById('show-terms');
+        const closeBtn = document.getElementById('close-modal');
+
+        showBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            modal.style.display = 'block';
+        });
+
+        closeBtn.addEventListener('click', function() {
+            modal.style.display = 'none';
+        });
+
+        window.addEventListener('click', function(e) {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

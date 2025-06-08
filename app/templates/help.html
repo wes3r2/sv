@@ -1,0 +1,183 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+<div class="background-blobs">
+            <div class="blob blob1"></div>
+            <div class="blob blob2"></div>
+            <div class="blob blob3"></div>
+</div>
+
+<div class="help-container">
+<a href="javascript:void(0)" onclick="goBack()" class="cancel-top-btn">✖ Cancel</a>
+
+    <div class="content-wrapper">
+        <div class="help-card">
+            <h2><i class="icon">❓</i> Frequently Asked Questions</h2>
+            <div class="faq-list">
+                <div class="faq-item">
+                    <h3>Q: What if the form is disabled or not working?</h3>
+                    <p>A: If you encounter technical issues or the form is disabled, immediately contact the authorities or reach out to your supervisor.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>Q: How often do I need to submit this form?</h3>
+                    <p>A: The form must be submitted <strong>once every month without fail</strong>, preferably by the last working day of the month.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>Q: What if I make a mistake in my submission?</h3>
+                    <p>A: Contact your supervisor or use the help form below to report the error. Do not submit multiple forms for the same month.</p>
+                </div>
+                
+                <div class="faq-item">
+                    <h3>Q: How do I search for car information?</h3>
+                    <p>A: Use only the <strong>last 4 digits of the vehicle registration number</strong> when searching for car-related information.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="instructions-card">
+            <h2><i class="icon">📋</i> Form Completion Guidelines</h2>
+            
+            <div class="instruction-section">
+                <h3>1. Personal Details (Page 1)</h3>
+                <ul>
+                    <li><strong>Employee ID:</strong> Enter your unique employee identification number</li>
+                    <li><strong>Full Name:</strong> Enter your complete name as per company records</li>
+                    <li><strong>Mobile Number:</strong> 10-digit mobile number (read-only field)</li>
+                </ul>
+            </div>
+
+            <div class="instruction-section">
+                <h3>2. Company Details (Page 2)</h3>
+                <ul>
+                    <li><strong>Company Contact:</strong> Enter valid 10-digit company contact number</li>
+                    <li><strong>Portfolio Name:</strong> Specify your current portfolio/project name</li>
+                    <li><strong>Designation:</strong> Your current job title/position</li>
+                    <li><strong>Joining Date:</strong> Select your date of joining the company</li>
+                    <li><strong>Manager Name:</strong> Select your reporting manager from the dropdown</li>
+                </ul>
+            </div>
+
+            <div class="instruction-section">
+                <h3>3. Work Performance Metrics (Page 3)</h3>
+                <ul>
+                    <li><strong>TeleCaller Name:</strong> Enter the name of assigned telecaller</li>
+                    <li><strong>Allocation Count:</strong> Number of cases/tasks allocated to you</li>
+                    <li><strong>Total Calls/Visits Made:</strong> Total number of calls or visits completed</li>
+                    <li><strong>Total Monthly Collection:</strong> Amount collected during the month</li>
+                </ul>
+            </div>
+
+            <div class="instruction-section">
+                <h3>4. Bank & Verification Details (Page 4)</h3>
+                <ul>
+                    <li><strong>Bank ID:</strong> Enter alphanumeric bank identification (3-20 characters)</li>
+                    <li><strong>Supervisor Name:</strong> Name of your direct supervisor</li>
+                    <li><strong>Month of Submission:</strong> Current month (auto-filled)</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="terms-card">
+            <h2><i class="icon">📜</i> Important Terms & Conditions</h2>
+            <div class="terms-grid">
+                <div class="term-item">
+                    <h4>Monthly Submission</h4>
+                    <p><strong>MANDATORY:</strong> Submit once every month without fail</p>
+                </div>
+                <div class="term-item">
+                    <h4>Data Accuracy</h4>
+                    <p>All information must be accurate, complete, and valid</p>
+                </div>
+                <div class="term-item">
+                    <h4>Technical Issues</h4>
+                    <p>Contact authorities if form is disabled or not working</p>
+                </div>
+                <div class="term-item">
+                    <h4>Data Privacy</h4>
+                    <p>Information used solely for performance evaluation</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="contact-card">
+            <h2><i class="icon">📧</i> Send a Query</h2>
+            <p>If you need assistance or have questions, please fill out the form below.</p>
+            
+            <form id="helpForm" class="help-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Full Name *</label>
+                        <input type="text" id="name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="subject">Subject *</label>
+                    <select id="subject" name="subject" required>
+                        <option value="">Select a topic</option>
+                        <option value="Form Technical Issues">Form Technical Issues</option>
+                        <option value="Form Disabled/Not Working">Form Disabled/Not Working</option>
+                        <option value="Data Correction Request">Data Correction Request</option>
+                        <option value="Submission Problems">Submission Problems</option>
+                        <option value="Login Issues">Login Issues</option>
+                        <option value="General Inquiry">General Inquiry</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="message">Message *</label>
+                    <textarea id="message" name="message" rows="4" required placeholder="Please describe your issue or question in detail..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">Send Query</button>
+            </form>
+
+            <div id="helpMessage" class="help-message" style="display: none;"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+document.getElementById('helpForm').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    
+    const formData = new FormData(this);
+    const messageDiv = document.getElementById('helpMessage');
+    const submitBtn = this.querySelector('button[type="submit"]');
+    
+    // Show loading state
+    submitBtn.textContent = 'Sending...';
+    submitBtn.disabled = true;
+    
+    try {
+        const response = await fetch('/send_help_query', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const result = await response.json();
+        
+        messageDiv.style.display = 'block';
+        if (result.success) {
+            messageDiv.className = 'help-message success';
+            messageDiv.textContent = result.message;
+            this.reset();
+        } else {
+            messageDiv.className = 'help-message error';
+            messageDiv.textContent = result.message;
+        }
+    } catch (error) {
+        messageDiv.style.display = 'block';
+        messageDiv.className = 'help-message error';
+        messageDiv.textContent = 'Error sending query. Please try again.';
+    } finally {
+        submitBtn.textContent = 'Send Query';
+        submitBtn.disabled = false;
+    }
+});
+</script>

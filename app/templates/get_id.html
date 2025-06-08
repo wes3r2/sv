@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get Your ID Card</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/getid.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="form-card">
+            <h2>Enter Your Employee ID</h2>
+            <form action="{{ url_for('main.view_id') }}" method="GET">
+                <div class="input-group">
+                    <label for="emp_id">Employee ID:</label>
+                    <input type="text" id="emp_id" name="emp_id" required placeholder=" ">
+                </div>
+                <button type="submit">Get Your ID Card</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
